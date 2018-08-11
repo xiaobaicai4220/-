@@ -1,0 +1,58 @@
+<body>
+	<canvas id="myCanvas" width="800" height="800"></canvas>
+</body>
+<script src="jquery.js"></script>
+<script>
+
+var canvas = $("#myCanvas");
+	var context = canvas.get(0).getContext("2d");
+	
+	var canvasWidth = canvas.width();
+	var canvasHeight = canvas.height();
+	
+	//调整屏幕大小
+	$(window).resize(resizeCanvas);
+	
+	function resizeCanvas(){
+		canvas.attr("width",$(window).get(0).innerWidth);
+		canvas.attr("height",$(window).get(0).innerHeight);
+		canvasWidth = canvas.width();
+		canvasHeight = canvas.height();
+	};
+	resizeCanvas();
+	
+	//设置样式
+	context.rotate(Math.PI/2);
+	var gradient = context.createLinearGradient(0,0,parseInt(canvasWidth),0);
+	gradient.addColorStop(0,"#ffffff");
+	gradient.addColorStop(0.5,"#369B98");
+	gradient.addColorStop(1,"#ffffff");
+    context.fillStyle = gradient;
+	context.font = "bold 20px '字体','字体','微软雅黑','宋体'";
+	context.fillText('110000000' ,10 ,-40);
+
+/**
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");
+function draw(id){
+    
+	//[canvas.width,canvas.height] = [canvas.height,canvas.width];	
+    context.fillStyle = '#09636E';
+    context.fillRect(0,0,canvas.width,canvas.height);
+	context.rotate(Math.PI/2);
+	var gradient = context.createLinearGradient(0,0,canvas.width,0);
+	gradient.addColorStop(0,"#ffffff");
+	gradient.addColorStop(0.5,"#369B98");
+	gradient.addColorStop(1,"#ffffff");
+    context.fillStyle = gradient;
+    context.font = "bold 20px '字体','字体','微软雅黑','宋体'"; 
+	
+    context.fillText('110000000' ,10 ,-40);
+    context.fillText('01010101001',40,-110);
+    context.fillText('00010110',580,-180);
+}
+window.onload = function(){
+	draw("myCanvas");
+	}
+	**/
+</script>

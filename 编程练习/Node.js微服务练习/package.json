@@ -1,0 +1,19 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "description": "test project",
+  "main": "test1.js",
+  "scripts": {
+    "test": "grunt validate --verbose",
+    "start": "node test1.js"
+  },
+  "author": "xiaobaicai",
+  "dependencies": {
+    "connect": "^3.6.6",
+    "connect-query": "^1.0.0",
+    "mongo-store": "0.0.2",
+    "seneca": "^3.6.0",
+    "seneca-web": "^2.2.0",
+    "seneca-web-adapter-express": "^1.1.1"
+  }
+}
