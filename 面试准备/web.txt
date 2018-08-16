@@ -1,0 +1,224 @@
+1:跨域请求资源的方法
+2:垃圾回收机制及内存管理
+3:开发过程中遇到的内存泄漏问题,如何解决?
+4:JavaScript中继承实现
+5:jQuery库中$是什么?
+6:$(this) 和 this 关键字在 jQuery 中有何不同？
+7:jQuery中的Delegate()函数有什么作用？
+8:$(document).ready()（小）方法和window.onload(大)有什么区别？
+9:get和post方法有什么不同?
+10:简述一下src与href的区别
+11:简述同步和异步的区别
+12:px和em的区别
+13:浏览器的内核分别是什么
+14:优雅降级和渐进增强
+15:sessionStorage,localStorage和cookie之间的区别
+16:Web Stroage与cookie不同
+17:Ajax的优缺点及工作原理
+18:规避JavaScript多人开发函数重名问题
+19:减轻页面加载时间的方法
+20:你了解到的Web攻击技术
+21:Web前端开发,如何提高页面性能优化
+22:前端开发中如何优化图像
+23:图片格式和区别
+24:浏览器是如何渲染页面的
+25:如何避免XSS?
+26:谈谈你对模块化的理解
+27:如何使用缓存
+28:谈谈你对预加载的理解
+29:缓存和预加载的区别是什么?
+30:图片如何压缩
+31:压缩文件有哪些方法?
+32:如何区分静态页面和动态页面?
+33:字符串拼接和模板引擎,项目中会如何操作?模板引擎会不会利于SEO优化?
+34:前台兼容性问题有哪些?
+35:你如何对网站的文件和资源进行优化,期待的方案有哪些?
+36:懒加载是用滚轮判断高度好还是用插件?
+37:如何缓存整个页面?在没有网络的时候可以来回跳转
+38:CDN是什么
+39:浏览器一次可以从同一个域名下请求多少资源?
+40:image和canvas在处理图片时有什么不同?
+41:简述移动开发的注意点,如何做好不同手机的适配,你以前的项目是怎么做的?
+43:HTTP协议和TCP协议有什么区别?
+44:设计模式有哪些?列举你在前端开发中自己应用或者了解到其他框架所用到的设计模式
+45:JavaScript中的事件级别
+46:前端如何进行错误监控?
+47:MVVM模式与MVC模式的区别
+48:标准盒模型和IE盒模型有什么区别?
+49:浏览器是怎样解析CSS选择器的
+50:在网页中使用的字体大小应该是偶数还是奇数
+51:元素竖向的百分比设定是相对于容器的高度吗?
+52:什么是响应式设计?响应式设计的基本原理是什么?如何兼容低版本的IE
+53:如何解决Chrome浏览器下不支持CSS字体小于12px的问题?
+54:rgba()和opacity的透明效果的异同
+55:手动写动画需要设置的最小时间间隔和原因
+56:dispaly:inline-block 什么时候会显示间隙?
+57:overflow属性的参数及其含义
+58:请简述一下HTTP2协议的特性
+59:如果不给cookie设置过期时间会怎样?
+60:执行以下程序段后,X的值是?
+	var x=0;
+	switch(++x)	
+	{
+		case 0: ++x;
+		case 1: ++x;	
+		case 2: ++x; 	
+	}
+61:我们需要实现动态加载一个JavaScript资源,但是有几处不知道如何处理,需要在您的帮助完成这项工作
+	var script = document.createElement('script');
+	var head = documnet.getElementsByTagName('head')[0];
+	script.type = 'text/javascript'
+	script.src = "//i.alicdn.com/resource.js"
+	//绑定资源或成功事件
+	script.____ = function(){
+		//判断资源加载状态是否为加载成功或加载完成
+		if(/^(loaded|complete)$/.test(script.____)){
+			script._____ = null;
+				...
+		}
+	};
+	//绑定资源加载失败事件
+	script.onerror = function(){
+		...
+	}
+	
+62:在浏览器控制台执行以下结果,输出的信息是
+	function test(){
+		var n = 4399;
+		function add(){
+			n++;
+			console.log(n);
+		}
+		return {n:n,add:add}
+	}
+	var result = test();
+	var result2 = test();
+
+	result.add();			
+	result.add();			
+	console.log(result.n)	
+	result2.add()			
+63:关于3D变换属性
+64:移动端要想动画性能流畅,应该使用3D硬件加速,因此最好给页面中的元素添加translate3D() 或translateZ(0)属性,来触发硬件加速?
+65:margin重叠部分如何消除: overflow:hidden
+66:常见的行内元素,块级元素有哪些?
+	行内元素:a b br i span input select 
+	块级元素:div p h1 h2 h3 h4 form ul
+67:给一个元素设置bakcground,其中padding和margin部分会生效吗? 
+68:简述一下浮动,如何清除浮动?
+69:简述一下position
+70:如何使用原生JS给CSS设置class,
+71:import和link的区别,如果import一个非常重要而且非常大的重要文件,会发生什么?
+72:简述选择器和其优先级,为什么不推荐使用!important
+73:JS的数据类型,以及对应的内存类型
+74:伪数组类型与真正的数组类型的区别，伪数组类型不能使用pop（）和push（），
+75:getXXXByXXX 和querySelector的区别
+76:rem与em的使用和区别详解
+77:HTTP状态码
+78:TCP3次握手和4次挥手
+79:XSS原理及防范(跨站脚本攻击)
+80:CSRF原理及防范(跨站点请求伪造)
+81:web worker和websocket
+82:HTTP和HTTPS
+83:性能优化
+84:一次用户访问HTTP页面的过程
+85:如何快速实现渲染?
+86:堆和栈的区别
+87:快速排序的思想
+88:你觉得jQuery或zepto源码有哪些写的好的地方?
+89:cookie和session的区别
+90:display:none 和 visibility:hidden的区别
+91:position:absolute 和 float 属性的异同
+93:CSS3选择符有哪些?
+94:说说你对语义化的理解
+96:上下margin重合问题
+97:null和undefined的区别
+98:new操作符具体干了什么?
+99:js延迟加载的方式有哪些
+100:call()和apply()的区别和作用?
+101:哪些操作会造成内存泄漏?
+102:对前端工程师这个职位是怎么理解的?它的前景会是怎样?
+103:JavaScript对象的几种创建方式
+104:JavaScript继承的6种方法
+105:GET和POST的区别,何时使用POST?
+106:ajax的缺点和IE下的问题?
+107:谈谈你对重构的理解
+108:说说你对Promise的理解
+109:说说严格模式的限制
+110:设立"严格模式的目的",主要有以下几个
+111:expires是什么?
+112:attribute和propety的区别是什么?
+113:说说网络分层里七层模型是哪七层
+114:请说一下常见的协议
+115:说说NOSQL和MYSQL的区别
+116:讲讲304缓存的原理
+117:什么样的前端代码是好的?
+118:什么是CSS Hack
+119:JavaScript中callee和caller的作用
+120:手写快速排序
+121:手写二分查找
+122:Doctype作用?标准模式与兼容模式各有什么区别?
+123:HTML5为什么只需要写<!DOCTYPE html>?
+124:介绍一下你对浏览器内核的理解
+125:简述一下你对HTML语义化的理解
+126:介绍js的基本数据类型
+127:js有哪些内置对象
+128:eval是做什么的?
+129:call()和apply()的区别和作用
+130:HTTP状态码知道哪些?
+131:你有哪些性能优化的方法?
+132:线程和进程的区别
+133:常用浏览器内核,
+134:标签上title与alt属性的区别是什么?
+135:描述css reset的作用和用途
+136:浏览器标准模式和怪异模式之间的区别是什么?
+137:你如何对网站的文件和资源进行优化?期待的解决方案包括:
+138:列举三种强制类型转换和2种隐式类型转换
+139:数组方法pop(),push(),shift(),unshift()
+140:事件绑定和普通事件有什么区别?
+141:JavaScript的本地对象,内置对象和宿主对象.
+142:'=='和'==='的不同
+143:对web标准以及w3c的理解和认识
+144:HTML和xhtml有什么区别
+145:<!DOCTYPE>
+146:有这么一段HTML,请挑毛病:
+	<p>&nbsp;&nbsp;哥写的不是HTML,是寂寞.<br><br>&nbsp;&nbsp;我说：<br>不要迷恋哥，哥只是一个传说
+147:CSS层叠是什么?介绍一下
+148:JavaScript中this关键字的指向
+149:JavaScript继承有哪两种形式,进行描述
+150:说说有哪些查找
+151:排序
+152:你使用CSS预处理器吗?
+153:写出几种IE6 BUG的解决方法
+154:IE和DOM事件流的区别
+
+IE6:
+	1:双边距BUG float引起的 使用display
+	2:像素问题 使用float引起的 使用display:inline -3px
+	3:超链接点击失效问题 使用正确的书写顺序 link visited hover active
+	4:z-index问题 给父级添加position:relative
+	5:png透明问题 使用js代码改
+	6:Min-height 最小高度 !important解觉
+	
+109:说说严格模式的限制
+	1:变量必须先声明后使用
+	2:函数的参数不能有同名属性,否则报错
+	3:不能使用with属性
+	4:不能对只读属性赋值,否则报错
+	5:不能使用前缀0表示八进制数,否则报错
+	6:不能删除不可删除的属性,否则报错
+	7:不能删除变量delete prop,会报错,只能delete grobal[prop]
+	8:eval不会在它的外层作用域引入变量
+	9:eval和arguments不能被重新赋值
+	10:arguments不会自动反应函数参数的变化
+	11:不能使用arguments.callee
+	12:不能使用arguments.caller
+	13:禁止this指向全局对象
+	14:不能使用fn.callee和fn.caller
+	15:增加了保留字(比如 protected,static和interface)
+	
+110:设立"严格模式的目的",主要有以下几个
+	消除JavaScript语法的一些不合理,不严谨之处,
+	消除代码运行的一些不安全之处
+	提高编译器效率,增加运行速度
+	为未来新版本的JavaScript做好铺垫
