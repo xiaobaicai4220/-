@@ -1,0 +1,1894 @@
+1:跨域请求资源的方法
+	proxy代理:proxy代理用于将请求发送给后台服务器，通过服务器来发送请求，然后将请求的结果传递给前端。
+	CORS:一般需要后端人员在处理请求数据的时候，添加允许跨域的相关操作。如下：
+		res.writeHead(200, {
+   			"Content-Type": "text/html; charset=UTF-8",
+   			"Access-Control-Allow-Origin":'http://localhost',
+    		'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    		'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type'
+		});
+	JSONP:通过动态创建script来读取他域的动态资源，获取的数据一般为json格式.
+		JSONP的缺点:无法实现POST请求,难判断是否请求成功,一般使用超时时间判断
+	
+2:垃圾回收机制及内存管理
+	标记清除:变量进入环境,加标记. 变量离开环境,去除标记.无标记的,清除
+	引用计数:即通常说的GC机制
+	
+3:开发过程中遇到的内存泄漏问题,如何解决?
+	什么是内存泄漏? 一块内存即不能用,也不能回收
+	内存泄漏的几种情况
+		1:当页面中元素被移除或替换时,元素绑定的时间仍然没有被移除
+		2:闭包
+
+4:JavaScript中继承实现
+	原型链: prototype
+	call()/apply()
+	混合模式:
+	对象冒充
+
+5:jQuery库中$是什么?
+	$() 函数是 jQuery() 函数的别称。$() 函数用于将任何对象包裹成 jQuery 对象，
+	接着你就被允许调用定义在 jQuery 对象上的多个不同方法。你可以将一个选择器字符串传入 $() 函数，
+	它会返回一个包含所有匹配的 DOM 元素数组的 jQuery 对象。
+	
+6:$(this) 和 this 关键字在 jQuery 中有何不同？
+	$(this) 返回一个 jQuery 对象，你可以对它调用多个 jQuery 方法，比如用 text() 获取文本，用val() 获取值等等。
+	this是当前执行的上下文
+
+7:jQuery中的Delegate()函数有什么作用？
+	如果你有一个父元素，需要给其下的子元素添加事件，这时你可以使用delegate()了，代码如下：
+		$("ul").delegate("li", "click", function(){ $(this).hide(); });
+	当元素在当前页面中不可用时，可以使用delegate()
+	
+8:$(document).ready()方法和window.onload有什么区别？
+	window.onload方法是在网页中所有的元素(包括元素的所有关联文件)完全加载到浏览器后才执行的。
+	$(document).ready() 方法可以在DOM载入就绪时就对其进行操纵，并调用执行绑定的函数。
+	
+9:get和post方法有什么不同?
+	请求方式不同：$.get() 方法使用GET方法来进行异步请求的。$.post() 方法使用POST方法来进行异步请求的。
+	参数传递方式不同：get请求会将参数跟在URL后进行传递，而POST请求则是作为HTTP消息的实体内容发送给Web服务器的，这种传递是对用户不可见的。
+	数据传输大小不同：get方式传输的数据大小不能超过2KB 而POST要大的多
+	安全问题： GET 方式请求的数据会被浏览器缓存起来，因此有安全问题。
+	
+10:简述一下src与href的区别
+	href是指向网络资源所在位置,建立和当前元素和当前文档之间的链接,类似锚点
+	src是指向外部资源的位置,指定的内容将会嵌入到文档中当前标签所在的位置;在请求src资源时会将其指向的资源下载,
+	并应用到文档中,例如js脚本,img图片和frame等元素
+	当浏览器解析到该元素时,会暂停其他资源的下载和处理,直到将该资源下载,编译,执行完毕,图片和框架等元素也是如此
+	
+11:简述同步和异步的区别
+	同步是阻塞模式,异步是非阻塞模式
+	同步就是指一个进程在执行某个请求的时候,若该请求需要一段时间才能返回信息,那么这个进程将会一直等待下去,直到消息返回
+	异步是指进程不需要一直等待下去,而是继续执行下面的操作. 当有消息返回时,再回来继续执行该进程
+	
+12:px和em的区别
+	px是固定的,表示像素值
+	em是不固定的,浏览器默认的都是16px,且em会继承父级元素的字体大小
+	
+13:浏览器的内核分别是什么
+	IE:trident内核
+	Firfox:gecko内核
+	Safari:webkit内核
+	Opera:以前是presto,现在是blink
+	chrome:Blink
+	
+14:优雅降级和渐进增强
+	渐进增强:针对低版本浏览器进行构建页面,保证最基本的功能,然后再针对高版本浏览器增加效果
+	优雅降级:一开始就构建完整的功能,然后再针对低版本浏览器进行兼容
+	
+15:sessionStorage,localStorage和cookie之间的区别
+	1:需要发送到:cookie数据需要发送到服务器,会造成一定的带宽浪费,web Storage保存在本地
+	2:数据存储大小不同:cookie 4K, webStorage 5M
+	3:有效期限不同:cookie在设置的过期时间之前一直有用,session在当前会话关闭前有用,localStorage一直有用除非用户删除
+	4:作用域不同:cookie和localstorage在同源同窗口中都是共享的,session只在当前页面有效
+
+16:Web Stroage与cookie不同
+	1:webstorage存储空间更大,ID8下每个独立的存储空间为10M,其他浏览器也都不同
+	2:存储内容不会发送到服务器,
+	3:接口更多,cookie需要自己封装接口
+	3:独立的存储空间,每个域(包括子域)有独立的存储空间,各个存储空间是完全独立的,因此不会造成数据混乱
+	
+17:Ajax的优缺点及工作原理
+	定义:Ajax:异步js和XML,是一种快速创建动态网页的技术,是一种无需重新加载整个网页的情况下,能够更新部分网页的技术
+	优点:1:减轻了服务器的负担,按需取数据
+		2:局部刷新页面,用户体验更好
+		3:基于XML,被广泛支持
+	缺点:1:局部刷新,页面的后退按钮是没用的
+		2:对流媒体和移动设备的支持不是很好
+		3:大量使用JavaScript和ajax引擎,在编写的时候需要考虑浏览器兼容性
+	工作原理:
+		1:创建ajax对象
+		2:判断数据传输方式
+		3:打开链接 open()
+		4:发送 send()
+		5:判断服务器返回状态码,并执行回调
+		
+18:规避JavaScript多人开发函数重名问题
+	1:命名空间
+	2:封闭空间
+	3:js模块化MVC
+	4:变量装换成对象的属性
+	5:对象化
+
+19:减轻页面加载时间的方法
+	1:压缩css,js文件
+	2:合并css,js文件,减少http请求
+	3:css文件放在页面顶,js文件放在页面底
+	4:减少dom操作,尽可能用变量替代不必要的dom操作
+	
+20:你了解到的Web攻击技术
+	1:XSS(跨站脚本攻击) 是指通过存在安全漏洞的Web网站注册用户的浏览器内运行非法的HTML或JS进行的攻击,
+	2:SQL注入
+	3:CSRF(跨站点请求伪造) 指攻击者通过设置好的陷阱,强制对已完成的认证用户进行非预期的个人信息或设定信息等某些状态更新
+
+21:Web前端开发,如何提高页面性能优化
+	内容:
+		1:减少HTTP请求
+		2:减少DOM节点操作
+		3:使用ajax缓存
+	css:
+		1:把css放到代码页上方
+		2:从页面中剥离JavaScript和css
+		3:精简JavaScript和css
+		4:减少使用css表达式
+	JavaScript:
+		1:将JavaScript放到代码页下方
+		2:移除重复脚本
+		3:精简JavaScript和css
+		4:从页面中剥离JavaScript和css
+	面向图片:
+		1:优化图片
+		2:使用恰当的图片格式
+		3:不要在HTML中使用缩放图片
+		4:使用CSS sprites(css 精灵)技巧对图片进行优化
+
+22:前端开发中如何优化图像
+	1:不用图像,尽量用CSS3效果代替,比如实现阴影,圆角,等效果
+	2:使用矢量图SVG代替位图
+	3:使用恰当的图片格式.我们常见的图片格式有JPEG,GIF,Png
+	4:按照HTTP协议设置合理的缓存
+	5:使用字体图标 webfont,css sprite等
+	6:用css或JavaScript实现预加载
+	7:用JavaScript实现懒加载
+	8:使用WebP图片格式
+	
+23:图片格式和区别
+	矢量图: webfont,SVG
+	位图:gif,jpg,png
+		gif:gif是一种无损,8位图片格式
+		jpg:jpg 微损,允许轻微色彩失真, 适合色彩丰富的图片
+		png:
+	
+24:浏览器是如何渲染页面的
+	1:解析HTML文件,创建DOM树
+		自上而下,遇到任何样式与脚本都会阻塞
+	2:解析CSS,优先级:浏览器默认设置<用户设置<外部样式<内联样式<HTML中的style样式；
+	3:将CSS与DOM合并,构建渲染树
+	4:布局和绘制,重绘和重排
+
+25:如何避免XSS?
+	禁止危险脚本
+	
+26:谈谈你对模块化的理解
+	什么是模块化:
+		1:模块化是为了减少系统耦合度,提高高内聚,减少资源循环依赖,增强系统框架设计
+		2:模块化为了便于维护,提高代码复用性
+		3:模块化开发,针对功能和特性组织代码,JS方面而言,模块化解决了独立作用域,API暴露,按需加载,安全合并,
+		  依赖管理等问题  css反面主要是解决依赖管理,组件内部样式管理等问题
+	
+27:如何使用缓存
+	可以基于http的头信息控制缓存
+	ajax请求对于早期的IE浏览器默认就是缓存的,可以通过事件戳防止缓存
+	
+28:谈谈你对预加载的理解
+	Web预加载指的是在网页全部加载完成之前,在页面优化显示一些主要内容,以提高用户体验,对于一个较庞大的网站,
+		如果没有使用预加载技术,用户界面就会显示教长时间的空白,可以使用JavaScript预先加载一些内容
+	例如，可以通过js预先从服务加载图片资源(动态创建Image，设置src属性)，只要浏览器把图片下载到本地，
+		就会被缓存，再次请求相当的src时就会优先寻找浏览器缓存，提高访问速度。
+	
+29:缓存和预加载的区别是什么?
+	缓存是指把请求过的数据缓存起来,下次再次请求的时候直接使用就行
+	预加载是指提前把需要的内容加载完成,当需要的时候,因为已经提前加载好了,所有不存在延迟
+	
+30:图片如何压缩
+	可以使用一些在线的图片压缩工具,
+	优先使用png,而不是jpg,
+	尝试使用png8
+	使用css sprite
+	
+31:压缩文件有哪些方法?
+	Grunt,sass,ant压缩
+	
+32:如何区分静态页面和动态页面?
+	看后缀,一般动态页面后缀都有'?'和'&'号,
+	
+33:字符串拼接和模板引擎,项目中会如何操作?模板引擎会不会利于SEO优化?
+	简单的数据渲染,字符串凭借就可以,复杂一点的使用模板引擎,需要关注SEO优化的页面最好使用后台渲染
+	
+34:前台兼容性问题有哪些?
+	主要是前端API渲染差异
+	
+35:你如何对网站的文件和资源进行优化,期待的方案有哪些?
+	文件合并,文件压缩
+	文件缓存
+	使用CDN
+	
+36:懒加载是用滚轮判断高度好还是用插件?
+	使用插件比较好,插件考虑的问题比较全面,仅通过滚轮判断很容易导致一些副作用(比如一次请求多次)
+
+37:如何缓存整个页面?在没有网络的时候可以来回跳转
+	使用H5,设置H5里面的cache manifest
+	
+38:CDN是什么
+	CDN全称:内容分发网络,
+	CND加速原理:将网站内容缓存在网络网格边缘(离用户接入网络最近的地方)
+	CDN的特点:
+		1:本地加速
+		2:镜像服务
+		3:远程加速
+		4:带宽优化
+		5:集群抗攻击
+		
+39:浏览器一次可以从同一个域名下请求多少资源?
+	浏览器的并发请求数目是针对同一域名的,不同浏览器对这个限制数目都不一样,不过一般是在10以内
+	
+40:image和canvas在处理图片时有什么不同?
+	image是通过对象的形式描述图片的,
+	canvas是通过将图片绘制在画布上
+	
+41:简述移动开发的注意点,如何做好不同手机的适配,你以前的项目是怎么做的?
+	单独做移动端项目,采用百分比布局
+	采用响应式的方式做适配
+	
+42:简述移动开发的注意点,如何做好不同手机的适配?
+	单独做移动端项目,使用百分比布局,
+	使用响应式的方式做适配
+	
+43:HTTP协议和TCP协议有什么区别?
+	TCP/IP是传输层协议,主要解决数据如何在网络层传输,
+	HTTP是应用层协议,HTTP是使用TCP协议实现的
+
+44:设计模式有哪些?列举你在前端开发中自己应用或者了解到其他框架所用到的设计模式
+	简单工厂,虚拟工厂,单例,适配器,解释器,桥接,享元,组合,装饰,参与者,等待者,观察者,状态,策略,MVC,MVVM,链模式,代理模式
+	前端开发中自己最常用的有,观察者模式,链模式,委托模式
+	
+45:JavaScript中的事件级别
+	DOM事件级别:
+		DOM0:document.onclick(funciton(){});
+		DOM2:document.addEventListener('click',function(){})
+		DOM3:在DOM2上添加的一些事件类型，如鼠标双击，滚轮..
+	DOM事件模型:冒泡和捕获
+	DOM事件流: 捕获阶段,目标阶段,冒泡阶段	
+	事件捕获具体流程: window>document>body>...>具体元素
+	
+46:前端如何进行错误监控?
+	前端错误分类:运行时错误和资源加载错误
+	运行时错误: try...catch 或 window.onerror
+	资源加载错误: object.onerror 
+	
+47:MVVM模式与MVC模式的区别
+	MVVM: model-view-view-model 模型
+		低耦合:视图可以独立于model变化而修改
+		可重用性:把一些视图逻辑放在一个viewModel中,让很多view重用这段逻辑
+		独立开发:开发专注逻辑,设计专注界面
+		可测试:MVVM模式开发中只需要测试单个View
+	MVC:model-view-control
+		MVC和MVVM其实差别不大,都是同一种设计模式,只不过在MVVM中将MVC中的Control换成了Model
+		这样做的优点是,减少了MVC中的大量DOM节点操作
+	
+48:标准盒模型和IE盒模型有什么区别?
+	都是margin(外边距),border(边框),padding(内填充),content(正文内容)组成
+	其中标准盒模型: width = content
+	IE盒模型: width = content + padding + border
+	
+49:浏览器是怎样解析CSS选择器的
+	CSS选择器的解析是从右向左解析的
+	
+50:在网页中使用的字体大小应该是偶数还是奇数
+	偶数:偶数字号更容易和其他web设计构成百分比关系,Window自带的宋体点阵也只提供12,14,16px三个大小的点阵
+
+51:元素竖向的百分比设定是相对于容器的高度吗?
+	当按百分比设定一个元素的宽度时,它是相对于父容器的宽度计算的
+	一些属性：margin-top,margin-bottom,padding-top,padding-bottom
+	但是对于一些表示竖向距离的属性,当按百分比设定的时候,依据的也是其父容器的宽度,而不是高度
+	
+52:什么是响应式设计?响应式设计的基本原理是什么?如何兼容低版本的IE
+	响应式网站设计是一个网站能够兼容多个终端,而不是为每一个终端做一个特定的版本
+	基本原理是:通过媒体查询检测不同的设备屏幕尺寸做处理
+		<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 user-scalable=no"/>
+		
+53:如何解决Chrome浏览器下不支持CSS字体小于12px的问题?
+	通过transform缩放
+	
+54:rgba()和opacity的透明效果的异同
+	opacity作用于元素以及元素内的所有内容的透明度
+	rgba()只作用于元素的颜色和背景色
+	
+55:手动写动画需要设置的最小时间间隔和原因
+	多数显示器的默认频率是60HZ,所以手动写动画设置的最小时间间隔是 1000/60 = 16.7ms
+	
+56:dispaly:inline-block 什么时候会显示间隙?
+	有空格时候会显示间隙: 移除空格
+	margin正值的时候:margin使用负值
+	使用font-size的时候:font-size:0
+	
+57:overflow属性的参数及其含义
+	overflow属性定义溢出元素内容区域如何处理
+		scroll:出现滚动条
+		auto:子元素内容大于父元素时出现滚动条
+		visible:溢出的元素内容出现在父元素之外
+		hidden:溢出的元素内容隐藏
+		
+58:请简述一下HTTP2协议的特性
+	多路复用请求
+	对请求划分优先级
+	压缩HTTP头
+	服务器推送流
+	
+59:如果不给cookie设置过期时间会怎样?
+	在浏览器会话结束时过期
+	
+60:执行以下程序段后,X的值是?
+	var x=0;
+	switch(++x)	//x=1
+	{
+		case 0: ++x;
+		case 1: ++x;	//x=2
+		case 2: ++x; 	//x=3
+	}
+	
+61:我们需要实现动态加载一个JavaScript资源,但是有几处不知道如何处理,需要在您的帮助完成这项工作
+	var script = document.createElement('script');
+	var head = documnet.getElementsByTagName('head')[0];
+	script.type = 'text/javascript'
+	script.src = "//i.alicdn.com/resource.js"
+	//绑定资源或成功事件
+	script.onreadystatechange = function(){
+		//判断资源加载状态是否为加载成功或加载完成
+		if(/^(loaded|complete)$/.test(script.readyState)){
+			script.onreadystatechange = null;
+				...
+		}
+	};
+	//绑定资源加载失败事件
+	script.onerr = function(){
+		...
+	}
+	
+62:在浏览器控制台执行以下结果,输出的信息是
+	function test(){
+		var n = 4399;
+		function add(){
+			n++;
+			console.log(n);
+		}
+		return {n:n,add:add}
+	}
+	var result = test();
+	var result2 = test();
+
+	result.add();			//n=4400
+	result.add();			//n=4401
+	console.log(result.n)	//n=4399
+	result2.add()			//n=4400
+	
+63:关于3D变换属性
+	在blink或webkit浏览器中,某个元素具有3D或透视变换的属性,会让浏览器创建单独的图层
+	在我们平时会使用left和top修改元素位置,但这样会触发重布局,取而代之的是使用translate,这个不会触发重布局
+	解决浏览器渲染的首要问题是避免图层的重绘和重布局
+	
+64:移动端要想动画性能流畅,应该使用3D硬件加速,因此最好给页面中的元素添加translate3D() 或translateZ(0)属性,来触发硬件加速?
+	可通过这种方法来优化CSS3的动画效果,在一个没有特效的普通页面中,一个页面中只有一个图层,当图层中的元素大小位置发生变化
+	时,整个页面都要重布局,可能会出现卡顿.使用3D,透视变换的属性,能强迫浏览器单独绘制一个图层,由GPU来重绘动画,能减少卡顿
+	的情况,然而使用GPU可能会导致严重的性能问题,因为它增加了内存的使用,而且他会减少移动端电池的寿命,因此使用的时候要小心
+	
+65:margin重叠部分如何消除: overflow:hidden
+
+66:常见的行内元素,块级元素有哪些?
+	行内元素:a b br i span input select 
+	块级元素:div p h1 h2 h3 h4 form ul
+	
+67:给一个元素设置bakcground,其中padding和margin部分会生效吗?  答:不会
+
+68:简述一下浮动,如何清除浮动?
+	浮动最开始出现是为了让文字环绕图片
+	浮动的元素没有高度,不用占位置的
+	清除浮动: 1,在父元素的最后加一个冗余元素并为其设置clear:both
+			2,给父元素添加overflow:hidden||auto
+			
+69:简述一下position
+	position:元素定位方式 static|absolute|relative|fixed
+		static:无特殊意义,使用浏览器默认的定位
+		absolute:绝对定位,相对于上一个使用了absolute定位的元素进行定位
+		relative:偏移定位,相对于元素原来的位置进行定位
+		fixed:相对屏幕定位
+	
+70:如何使用原生JS给CSS设置class,
+	var element = document.getElementById('elementname');
+	element.classList.addClass('className');
+	element.classList.removeClass('className');
+	
+71:import和link的区别,如果import一个非常重要而且非常大的重要文件,会发生什么?
+	从属关系区别:@import是CSS提供的语法规则,只有导入样式表的作用;
+			  link是HTML提供的标签,不仅可以加载CSS文件,而且可以加载其他文件
+	加载顺序区别:加载页面时,link标签引入的css被同时加载,@import引入的CSS将在页面加载完毕后被加载
+	兼容性区别:@import是css2.1 后加入的语法,再早期IE版本中不能使用
+	DOM可控性区别: @import是CSS语法,不可用js控制,link是HTML语法,可使用js操作DOM,插入link标签来改变样式
+	权重区别:link引入的样式权重大于@import引入的样式
+	如果引入一个非常大的CSS文件,会导致闪屏
+	
+72:简述选择器和其优先级,为什么不推荐使用!important
+	ID>class,伪类>标签
+	当!important被用在一个样式声明中,该样式声明会覆盖任何其他的声明
+	
+73:JS的数据类型,以及对应的内存类型
+	基本数据类型是栈存储,存的是数值
+	引用数据类型是堆存储,存的是引用
+	
+74:伪数组类型与真正的数组类型的区别，伪数组类型不能使用pop（）和push（），
+    那如何将一个伪数组类型转换为一个真正的数组类型
+    Array.prototype.slice.call(fakeArray)
+
+75:getXXXByXXX 和querySelector的区别
+	前者获取的是动态集合,选出的元素会随文档改变,
+	后者获取的是静态集合,选出的元素不会随文档改变
+	前者获取的是伪数组,后者获取的是真数组
+	
+76:rem与em的使用和区别详解
+	rem基于HTML元素的字体大小来决定,em根据使用它的元素的大小来决定
+	
+77:HTTP状态码
+	常见:200 服务器成功返回网页  404:请求的网页不存在  503:服务不可用
+	1XX:临时响应
+	2XX:成功
+	3XX:重定向
+	4XX:请求错误
+	5XX:服务器错误
+	
+78:TCP3次握手和4次挥手
+	3次握手:发送端首先发送一个带有SYN标志的数据包发给对方,对方收到后发送一个带有SYN/ACK回来,
+		  发送端收到后再次回传一个ACK表示"握手"结束
+	4次挥手:主动关闭方发送一个FIN,告诉被动关闭方已经不会向它发送消息了
+		  被动关闭方收到FIN后,发送一个ACK给对方,确认序号为收到序号+1
+		  被动关闭方发送一个FIN,告诉主动关闭方不会向它发送消息了
+		  主动关闭方收到FIN后,发送一个ACK给被动关闭方,确认序号为受到序号+1
+		  
+79:XSS原理及防范(跨站脚本攻击)
+	原理:攻击者往web页面插入恶意代码,骗取用户点击后窃取cookie中的用户隐私消息
+	防范:1:对用户输入进行处理 2:对用户cookie进行处理,不要在cookie中放直接泄漏用户信息的数据
+		3:使用cookie和ip绑定
+		
+80:CSRF原理及防范(跨站点请求伪造)
+	原理:在用户不知情的情况下执行其他站点的请求
+	攻击过程:1:用户以合法身份登录网站A,
+		   2:用户登录危险网站B
+		   3:危险网站B请求打开A,
+		   4:用户同意,危险网站提交表单给网站A
+	防范:1:验证HTTP头部refer信息
+		2:在请求地址中添加token并验证
+		3:在HTTP头中自定义属性并验证
+		
+81:web worker和websocket
+	webworker:H5中新增的多线程实现
+	websocket:H5中新增的信息,服务器可以主动发起通信,用来代替以前的轮训
+	
+82:HTTP和HTTPS
+	HTTP:基于TCP的应用层协议 HTTPS在HTTP层和TCP层新增SSL层
+	HTTP:80端口 HTTPS:443端口
+	
+83:性能优化
+	代码层面:避免使用CSS表达式,避免使用高级选择器,通配选择器   CSS放头部,js放尾部,css和js精简化
+	缓存利用:AJAX缓存,使用CDN,减少DNS查询使用外部JS和CSS文件以便缓存,添加Expires头，服务端配置Etag
+	请求数量:合并样式和脚本,使用CSS 精灵,初始首屏之外的图片按需加载,静态资源延迟加载
+	请求带宽:压缩文件,使用Gzip
+	
+	代码层面:
+		少用全局变量,使用CSS 精灵,缓存DOM查询,避免全局查询,避免使用with,避免在HTML标签中写src属性
+	移动端:
+		使用CSS3动画,开启硬件加速
+		尽量使用touch代替click事件
+		避免使用CSS3渐变,阴影效果
+		不滥用float
+		不滥用网络字体
+		
+84:一次用户访问HTTP页面的过程
+	1:DNS查询
+	2:TCP连接
+	3:HTTP请求
+	4:服务器响应
+	5:客户端渲染
+	
+85:如何快速实现渲染?
+	1:服务器必须在200ms以内渲染出响应内容
+	2:重定向的次数应该减至最少
+	3:首次渲染所需的网络往返次数减至最少
+		由于TCP的拥塞窗口机制,首次TCP连接一般只能发送10个包,即大概14KB的数据,所以首页的内容尽量在14K以内
+	4:避免在首屏内容中出现外链的阻塞式JavaScript和css
+	
+86:堆和栈的区别
+	1:栈区:由编译器自动编译释放,存放函数的值,局部变量的值等
+	2:堆区:一般由程序员分配释放,若程序员不释放,可能程序结束后会被OS回收
+	3:堆:堆可以看作一颗数,如堆排序
+	3:栈:后进先出
+	
+87:快速排序的思想
+	1:在数据集中寻找一个基准点,
+	2:建立两个数组,风别存储左边和右边的数组
+	3:利用递归进行排序
+	
+88:你觉得jQuery或zepto源码有哪些写的好的地方?
+	jQuery将所有代码都写在一个闭包中,并且传入window参数,防止污染全局作用域,而且查找window对象更快
+	jQuery将一些原型属性和方法封装在jQuery.prototye中,然后又赋给jQuery.fn 写法比较形象
+	jQuery大量使用链模式,即返回this,解决代码,提高了代码效率
+	有一些数组和对象经常能用到,jQuery将其保存为局部变量,提高了查找速度
+	
+89:cookie和session的区别
+	1:cookie数据存放在用户浏览器上,session存放在服务器中
+	2:cookie可被攻击者盗取用来cookie欺骗,考虑到安全,应该使用session
+	3:session会在一定时间内保存在服务器中,当访问量增加,比较消耗服务器性能.
+	4:一般来说,将登录信息等重要信息存放在session
+		其他信息存放在cookie中
+		
+90:display:none 和 visibility:hidden的区别
+	两者都起到隐藏元素的作用
+	display:none 通过收拢当前元素实现隐藏,即不给它分配空间
+	visibility:hidden 隐藏对应的元素,但是在文档中仍然保存它的布局
+	
+91:position:absolute 和 float 属性的异同
+	相同点:设置了position:absolute 和 float属性的元素,文档都脱离了正常的文档流,并且可以设置其宽高
+	不同点:position:absolute 会覆盖原文档流,float不会覆盖原文档流,会占位置
+	
+92:box-sizing属性用来控制元素的盒模型的解析模式.默认值是content-box
+	content-box:标准盒模型, width = contentWidth
+	border-box:IE盒模型,width = contentWidth+padding + border
+	
+93:CSS3选择符有哪些?
+	id选择器,class选择其,tag选择器,子选择器(p>li),后代选择器(p li)
+	通配符选择器(*),伪类选择器(p:hover),属性选择器
+	
+94:说说你对语义化的理解
+	1:去掉或丢失样式的时候能够让页面呈现出清晰的结构
+	2:有助于SEO:和搜索引擎,因为这两者是靠页面结构来确认关键字权重的
+	3:方便其他设备解析
+	4:便于团队开发和维护
+	
+95:常见兼容性问题
+	1:png24位的图片在IE6浏览器中
+	
+96:上下margin重合问题
+	ie和ff都存在,相邻的两个div的margin-left和margin-right不会重合,
+	但是margin-top和margin-bottom却会重合
+	解决方法:养成良好的编程习惯,同时使用margin-top或margin-bottom
+	
+97:null和undefined的区别
+	null表示无,转为数值时为0,undefined表示未赋值,转为数值时为NAN
+	一般当变量的声明还没有被初始化时,该变量未undefined
+	undefined使用场景:
+		1:变量被声明了,但没有被赋值时
+		2:调用函数时,该提供的变量没有被提供
+		3:对象没有赋值的属性
+		4:函数没有返回值时,默认返回undefined
+	null使用场景
+		1:作为函数的参数
+		2:作为原型链的终点
+	
+98:new操作符具体干了什么?
+	1:创建一个空对象,并且this指向该对象,同时还继承了该函数的原型
+	2:属性和方法被加入到this中
+	3:新创建的对象由this引用,并且隐式返回this
+	
+99:js延迟加载的方式有哪些
+	defer和async,动态创建DOM方式,按需求异步载入js
+	
+100:call()和apply()的区别和作用?
+	动态改变某个类的某个方法的运行上下文
+	
+101:哪些操作会造成内存泄漏?
+	setTimeout的第一个参数使用字符串而非函数的话,会引发内存泄漏
+	闭包,控制台日志,循环,移除元素而未移除元素上绑定的监听事件
+	
+102:对前端工程师这个职位是怎么理解的?它的前景会是怎样?
+	前端是最贴近用户的程序员,比后端,数据库,产品经理,运营,安全都进
+	前端需要实现:
+		1:实现界面交互
+		2:提升用户体验
+		3:有了node.js,前端可以实现服务端的一些事情
+	前端是最贴近用户的程序员,前端的编码相对后端来说多了一个对用户友好
+	
+103:JavaScript对象的几种创建方式
+	工厂模式,构造函数模式,原型模式,混合构造函数和原型模式,动态原型模式,
+	寄生构造函数模式,稳妥构造函数模式
+	
+104:JavaScript继承的6种方法
+	原型链继承,借用构造函数继承,组合继承,原型式继承,寄生式继承,寄生组合式继承
+	
+105:GET和POST的区别,何时使用POST?
+	GET:一般用于信息获取,使用URL传递参数,对所发送的数量也有限制,一般在2000个字符内
+	POST:一般用于修改服务器上的资源,对所发送的数据没有限制
+	GET方式需要使用Request.querystring来获得请求字符串的值,
+	而PSOT需要使用Request.Form来获取变量的值
+	也就是说GET通过地址栏传值,POST通过表单传值
+	然而在以下的一些情况下,请使用POST:
+		更新服务器上的文件或数据库
+		向服务器发送大量数据
+		发送包含未知字符的用户输入时,POST比get更稳定
+		
+106:ajax的缺点和IE下的问题?
+	缺点:1:ajax不支持浏览器back按钮,
+		2:安全问题,暴露了与服务器交互的细节
+		3:对搜索引擎的支持比较弱
+		4:破坏了程序的异常机制
+		3:不容易调试
+	IE缓存问题
+		在IE浏览器下,如果请求的方法是GET,并且GET的URL不变,那么这个结果就会被缓存,只要URL改变就不会被缓存.
+		常用的方法是在请求URL后面添加随机数
+	
+107:谈谈你对重构的理解
+	网站重构:在不改变网站的原有功能的前提下,简化结构,增加可读性,而在网页前端保持一致的行为.
+	对于传统网站的优化:
+		1:将table布局该为div+css布局
+		2:使网站前端兼容现代浏览器(以及移动端浏览器)
+		3:针对SEO的优化
+	深层次的网站重构应该考虑的问题
+		1:减少代码间的耦合
+		2:让代码保持弹性
+		3:严格按规范编写代码
+		4:设计可扩展的API
+		5:代替旧有的框架,语言
+		6:增强用户体验
+		7:压缩js,css,image等资源
+		8:程序的性能优化
+		9:采用CDN进行资源加速
+		10:对于DOM操作的优化
+		11:HTTP服务器的文件缓存
+	
+108:说说你对Promise的理解
+	Promise有4种状态
+		pending:初始状态,非fulfilled或rejected
+		fulfilled:成功
+		rejected:失败
+		settled:Promise已被fulfilled或rejected
+	Promise的API有:
+		then():
+		reject():
+		catch():
+		all():
+		race():
+		resolve():
+		done():置于回调链的尾端,保证任何可能抛出的错误
+		finally():不管Promise最后的状态是什么,都会指向该函数
+	
+109:说说严格模式的限制
+	1:变量必须先声明后使用
+	2:函数的参数不能有同名属性,否则报错
+	3:不能使用with属性
+	4:不能对只读属性赋值,否则报错
+	5:不能使用前缀0表示八进制数,否则报错
+	6:不能删除不可删除的属性,否则报错
+	7:不能删除变量delete prop,会报错,只能delete grobal[prop]
+	8:eval不会在它的外层作用域引入变量
+	9:eval和arguments不能被重新赋值
+	10:arguments不会自动反应函数参数的变化
+	11:不能使用arguments.callee
+	12:不能使用arguments.caller
+	13:禁止this指向全局对象
+	14:不能使用fn.callee和fn.caller
+	15:增加了保留字(比如 protected,static和interface)
+	
+110:设立"严格模式的目的",主要有以下几个
+	消除JavaScript语法的一些不合理,不严谨之处,
+	消除代码运行的一些不安全之处
+	提高编译器效率,增加运行速度
+	为未来新版本的JavaScript做好铺垫
+	
+111:expires是什么?
+	Expires是RFC 2616协议中和网页缓存相关自段.用来控制缓存的失效日期
+	
+112:attribute和propety的区别是什么?
+	attribute是dom元素在文档中作为html标签拥有的属性
+	property就是dom元素在js中作为对象拥有的属性
+	所以:
+	对于html的标准属性而言,attribute和prototype是等价的,是会自动更新的
+	但是对于自定义的属性来说,他们是不等价的,不会自动更新
+	
+113:说说网络分层里七层模型是哪七层
+	应用层,表示层,会话层,传输层,网络层,数据链路层,物理层
+	每一层的作用如下:
+		物理层:通过媒介传输比特,确定机械及电气特效(单位:比特)
+		数据链路层:将比特组装成帧和点到点的传输(帧)
+		网络层:负责数据包从源节点到目的节点的传递,并负责网际互连(包)
+		传输层:提供端到端的可靠报文传输和错误恢复(段)
+		会话层:建立,管理和终止会话(会话协议数据单元)
+		表示层:对数据进行防疫,加密和压缩(表示协议数据单元)
+		应用层:允许防卫OSI环境的手段(应用协议数据单元)
+	
+114:请说一下常见的协议
+	ICMP协议:因特网报文协议。它是TCP/IP协议族的一个子协议,用于在IP主机,路由器之间传递控制消息.
+	TFTP协议:是TCP/IP协议族中的一个用来在客户机与服务器之间进行简单文件传输的协议,提供不负责,开销不大的文件传输服务
+	HTTP协议:超级文本传输协议,是一个属于应用层的面向对象的协议,由于其简捷,快速的方式,适用于分布式超媒体信息系统
+	DHCP协议:动态主机配置协议,是一种让系统得以连接到网络上,并获取所需要的配置参数手段
+	RIP协议:动态路由选择协议，
+
+115:说说NOSQL和MYSQL的区别
+	MYSQL是传统的关系型数据库,NOSQL则是非关系型数据库
+	NOSQL的全称是not only SQL,直面翻译表示不仅仅是SQL,它提供了对关系的更高层抽象,即使用值键对的形式存储数据
+	mongodb以BSON结构(二进制)进行存储,对海量数据存储有着明显的优势
+	对比传统关系型数据库,NoSQL有着非常显著的性能和扩展性优势,与关系型数据库相比,MongoDB的优点有:
+		1:弱一致性(即最终一致),更能保证用户的访问速度
+		2:文档结构的存储方式,能够更快捷的获取数据
+		
+116:讲讲304缓存的原理
+	服务器首先产生ETag,服务器可在稍后使用它来判断页面是否已经被修改,本质上,客户端通过将该记号传回服务器要求服务器验证其(客户端)缓存
+	304是HTTP状态码,服务器用来标识这个文件没修改,不返回内容,浏览器在接收到这个状态码后,会使用浏览器已缓存的文件
+	
+117:什么样的前端代码是好的?
+	高复用,低耦合, 低代码量,高页面效果    低运行资源要求,高效果
+	
+118:什么是CSS Hack
+	一般来说是针对不同的浏览器写不同的CSS,就是CSS Hack
+	IE浏览器Hack一般分为三种,条件Hack,属性Hack,选择符Hack
+	
+119:JavaScript中callee和caller的作用
+	caller是返回一个对函数的引用,该函数调用了当前函数
+	callee是返回正在被执行的function函数,也就是所指定的function对象的正文
+
+120:手写快速排序
+	1:在数据集中,选择一个元素作为基准
+	2:所有小于基准的元素,都移到基准的左边,大于基准的元素都移到基准的右边
+	3:对基准左边和右边的两个子集,不断重复第一步和第二步,直到所有的子集都只剩下一个元素为止
+	
+121:手写二分查找
+	1:首先,从有序数组的中间的元素开始搜索,如果该元素正好是目标元素,则搜索结束.
+	2:如果目标元素大于该元素,则继续从有序数组的后半段开始查找,否则从前半段开始查找
+	3:迭代上述过程,直到找到目标元素,或者某一步数组为空,则表示找不到目标
+	
+122:Doctype作用?标准模式与兼容模式各有什么区别?
+	1:告知浏览器的解析器用什么文档标准解析这个文档.Doctype不存在或格式不正确,都会导致浏览器以兼容模式解析这个文档
+	2:标准模式的排版和js运行模式都是以该浏览器支持的最高标准运行.在兼容模式中,浏览器以向后兼容的方式,模拟老式浏览器的行为以防止站点无法工作
+	
+123:HTML5为什么只需要写<!DOCTYPE html>?
+	HTML5不基于SGML,因此不需要对DTD进行引用,但是需要doctype规范浏览器的行为
+	而HTML4基于SGML,所以需要对DTD进行引用
+	
+124:介绍一下你对浏览器内核的理解
+	浏览器内核主要分为两部分:渲染引擎和js引擎
+	渲染引擎:负责取得网页内容,整理信息,以及计算网页的显示方式,然后会输出至显示器
+		   浏览器内核的不同对于语法解释会有不同,所以渲染的效果也不相同,
+	js引擎:解析和执行JavaScript来实现网页的动态效果
+	最开始渲染引擎和js引擎并没有区分的很明确,后来js引擎渐渐独立,浏览器内核就一直只指渲染引擎
+	
+125:简述一下你对HTML语义化的理解
+	1:HTML语义化指,即使没有CSS样式,html文档也能显示出清晰的文档结构
+	2:用正确的标签做正确的事
+	3:HTML语义化让页面内容结构更清晰,便于浏览器解析,搜索引擎搜索
+	4:搜索引擎的爬虫也依赖于HTML标签来确定网站关键字的权重
+	5:使阅读源代码的人对网站更容易分块
+
+126:介绍js的基本数据类型
+	undefined,null,boolean,number,string,object,Symbol
+	
+127:js有哪些内置对象
+	数据封装类对象:Object,number,string,array,boolean
+	其他对象:Function,Date,Math,Aruguments,Regexp,Error
+	
+128:eval是做什么的?
+	它的功能是把对应的字符串代码解析成js代码并执行
+	应该避免使用eval,因为它特别耗性能,eval的执行需要执行两次(一次解析成js代码,一次执行)
+	
+129:call()和apply()的区别和作用
+	apply()函数有两个参数;第一个参数是上下文,第二个参数是参数组成的数组,如果上下文是null,则使用全局对象代替
+	call()的第一个参数是上下文,后续是实例传入的参数序列
+	
+130:HTTP状态码知道哪些?
+	100:continue,继续,一般在发送post请求时,已发送了http header之后,服务端将返回此状态码
+	200:ok,正常返回信息
+	201:createed 请求成功并且服务器创建了新的资源
+	202:accept,服务器已接受请求
+	301:请求的网页已永久性的移动到新位置
+	302:临时性重定向
+	303:重定向
+	304:请求的网页未更改
+	400:服务器无法理解请求的格式
+	401:请求未授权
+	403:禁止访问
+	404:Not found
+	500:服务器错误
+	501:服务器暂时无法处理请求,(过载或是维护)
+	
+131:你有哪些性能优化的方法?
+	1:减少HTTP请求,减少外链的DNS查询,CSS 精灵,Date缓存,AJAX缓存,
+	2:js,css源码压缩,js,css文件放在外链中,CDN托管,图片服务器
+	3:前端模板js+数据,减少由于HTML标签导致的带宽浪费,
+	4:DOM缓存,并且用innerHTML代替DOM操作,
+	5:少用全局变量,
+	6:避免使用css表达式
+	7:图片预加载,js放底部,css放顶部,
+	
+132:线程和进程的区别
+	1:一个程序至少有一个进程,一个进程至少有一个线程
+	2:进程是调度资源的基本单位,在浏览器中的情况就是进程在执行过程中拥有独立的内存单元,
+		而多个线程共享内存,从而极大提高了进程的运行效率
+	3:线程的粒度比进程小,线程之间的切换性能损失小于进程之间的切换
+	
+133:常用浏览器内核,
+	ie(ir),opera(presto),火狐(Gecko),谷歌(webkit)
+	
+134:标签上title与alt属性的区别是什么?
+	alt当图片不显示时用文字代表
+	title为该属性提供信息
+	
+135:描述css reset的作用和用途
+	重置浏览器的css默认属性,让他们统一
+	
+136:浏览器标准模式和怪异模式之间的区别是什么?
+	浏览器标准模式指浏览器按照W3C标准来执行页面代码,怪异模式指按照浏览器自己的标准来执行
+	区别主要是盒子模型,和渲染模式的不同
+	
+137:你如何对网站的文件和资源进行优化?期待的解决方案包括:
+	文件合并
+	文件最小化/文件压缩
+	使用CDN托管
+	缓存的使用
+	
+138:列举三种强制类型转换和2种隐式类型转换
+	强制:(parseInt,parseFloat,number)
+	隐式:== - 
+	
+139:数组方法pop(),push(),shift(),unshift()
+	pop()尾删除  push()尾添加
+	unshift()头部添加, shift()头删除
+	
+140:事件绑定和普通事件有什么区别?
+	普通事件只能绑定一个事件,上面的事件会覆盖下面的.
+	事件绑定可以绑定很多个,不会覆盖
+	
+141:JavaScript的本地对象,内置对象和宿主对象.
+	本地对象为 array,object,regexp等可以new实例化的对象
+	内置对象为Math,Number,global等不可以实例化的对象
+	宿主为浏览器自带的document,window等
+	
+142:'=='和'==='的不同
+	前者会自动转化类型,后者不会
+	
+143:对web标准以及w3c的理解和认识
+	标签闭合,标签小写,不乱嵌套,提高搜索机器人效率.使用外链css和js脚本,结构行为表现分离,
+	内容能被更多广泛的设备所访问,更少的代码和组件,更易维护,该版方便,不需要变动页面内容
+	
+144:HTML和xhtml有什么区别
+	html是一种基本的web网页设计语言,xhtml是一个基于XML的置标语言,
+	最主要的区别:XHTML中元素必须被正确的嵌套,元素必须关闭,标签必须小写,必须有根元素
+	
+145:<!DOCTYPE>
+	<!DOCTYPE>声明必须是html文档的第一行,位于<html>标签之前
+	<!DOCTYPE>声明不是HTML标签,它是指示浏览器页面是使用哪个版本的HTML进行编写的
+	在html4.01中,<!DOCTYPE>声明引用DTD,因为HTML4.1基于SGML,DTD规定了标记语言的规则.
+	HTML5不急于SGML,所以不需要引用DTD
+	
+146:有这么一段HTML,请挑毛病:
+	<p>&nbsp;&nbsp;哥写的不是HTML,是寂寞.<br><br>&nbsp;&nbsp;我说：<br>不要迷恋哥，哥只是一个传说
+	
+	考点1:html和Xhtml的区别
+		这行代码在html4.01strict下是完全正确的,在xhtml1.0中是错误一大堆,xhtml需要标签完全闭合.
+		p,br需要闭合,标签不允许大写,p要小写.同时&nbsp;必须包含在容器里.html下这些都没有错
+	考点2:考样式分离
+		用&nbsp控制缩进是不合理的,应该用css控制缩进
+	考点3:合理使用标签
+		br是强制拆行标签,p是段落.原题用连续的br制造两个段落的效果,效果是达到了,但显然用的不合理,
+		段落间距后期无法再控制.正确的做法是用两个p表现两个段落.
+	
+147:CSS层叠是什么?介绍一下
+	CSS就是层叠式样式表的简称.CSS层叠的意思就是在文档树中,子标记可以继承父标记定义的样式,
+	后定义的样式可以覆盖先定义的样式,优先级高的样式可以覆盖优先级低的样式.
+	
+148:JavaScript中this关键字的指向
+	在函数执行时,this总是指向调用该函数的对象,有调用对象则指向该调用对象,无调用对象则指向全局对象
+	使用场景:
+		1:元素button点击事件函数
+		2:有对象就指向调用对象
+		3:没有对象就指向全局对象window
+		4:用new构造函数,指向新对象
+		5:通过apply或bind来改变this
+		
+149:JavaScript继承有哪两种形式,进行描述
+	1:构造函数借用,在子类构造方法内,通过apply/call作为参数闯入
+		优点:可以向父类构造方法传递参数,即给apply第二个参数arguments
+			父类的属性都复制到子类实例中,属性之间无干扰,无论是引用类型还是封装类型
+		缺点:每一个实例都拥有一份父类对象的拷贝,互不干扰,所以无法统一修改
+			无法拥有父亲原型中定义的方法
+			子类的实例对象不能通过instance操作符判断是不是父类的实例
+	2:原型链继承:指定子类的prototype为父类的一个实例对象
+		优缺点和构造函数刚好相反
+		
+150:说说有哪些查找
+	折半查找,插值查找,二叉排序树,平衡二叉树B树
+	
+151:排序
+	冒泡排序:使用两个循环进行排序
+	选择排序:
+	
+152:你使用CSS预处理器吗?
+	不使用,但知道一点
+	CSS预处理使用一种专门的编程语言,为CSS增加了一些编程的特效,将CSS作为目标生成文件
+	这样开发者就只要使用这中语言进行编码工作,通俗的说,CSS预处理器用一种专门的编程语言,
+	进行Web页面样式设计,然后在编译成正常的CSS文件,以供浏览器使用.css预处理器为CSS
+	添加了一些编程的特效,无需考虑浏览器的兼容性问题,
+
+153:写出几种IE6 BUG的解决方法
+	1:双边距BUG float引起的 使用display
+	2:像素问题 使用float引起的 使用display:inline -3px
+	3:超链接点击失效问题 使用正确的书写顺序 link visited hover active
+	4:z-index问题 给父级添加position:relative
+	5:png透明问题 使用js代码改
+	6:Min-height 最小高度 !important解觉
+	
+154:IE和DOM事件流的区别
+	IE采用冒泡型事件,Netscape使用捕获型事件 DOM使用先捕获后冒泡型事件
+	
+155:看下面的代码，将会输出什么？
+	var a = 1;
+	function a(){}
+	alert(a); 	//打印1
+	
+	解释：变量提升
+		var a;function a(){}
+		a = 1;
+		alert(a)
+		
+156:事件循环绑定，输出结果
+	var list = document.getElementsByTagName('a');	//假设有0个A
+	for(var i = 0;i<list.length;i++){
+		list[i].onclick = function(i){
+			return function(){
+				alert(i);
+			}
+		}
+	}
+	//最终打印的结果都是10
+	
+	改进方法，将var i = 0;改为let i =0;
+	
+157:js数组去重
+	var arr = [1,6,3,9,3,8,2];
+	var obj = {}，newArr = [];
+	function delRepeat(){
+		for(var i =0,j=arr.length;i<j;i++){
+			if(!obj[arr[i]]){
+				newArr.push(arr[i])
+				obj[arr[i]] = arr[i];
+			}
+		}
+	}
+	
+158:两个div标签，如何控制标签左边固定，右边自适应，左边div标签的宽度为100px
+	//左边左浮动，右边overflow:hidden;
+		#lt{float:left;width:100px;background:#ff0;}
+		#rt{overflow:hidden;background:#f0f;}
+		
+159:实现一个函数clone,可以对JavaScript中的主要5种数据类型进行复制
+	Object.prototype.clone = function(){
+		var o = this.constructor === Array?[]:{};
+		for(var e in this){
+			o[e] = typeof this[e] === "object"?this[e].clone:this[e];
+		}
+		return o;
+	}
+	
+160:事件监听函数
+	function addEvent(elem,type,handler){
+		if(elem.addEventListener){
+			elem.addEventListener(type,handle,false);
+		}else if(elem.attachEvent){
+			elem.attachEvent('on'+type,handler)
+		}else{
+			elem['on'+type]=handler;
+		}
+	}
+	
+161:对作用域上下文和this的理解,看下列代码
+	var User = {
+		count:1,
+		getCount:function(){
+			return this.count;
+		}
+	};
+	console.log(User.getCount());	//1
+	
+	var func = User.getCount;
+	console.log(func());			//undefined
+	
+162:如何实现浏览器多个标签页之间的通信？
+	调用localstorage,cookies等本地存储方式
+	
+163:CSS隐藏元素的几种方法(至少说出三种)
+	1:opacity：		元素本身依然占据它自己的位置并对网页的布局其作用，同时响应用户交互
+	2:visibility:	不会响应用户交互
+	3:display:none 	设为none，读屏软件读不到元素的内容
+	4:position:		不会影响布局，能让元素保持可操作
+	
+164:CSS清除浮动的几种方法
+	clear:both
+	overflow:auto
+	:after
+	
+165:下面程序的执行结果
+	function fun(n,o){
+		console.log(o);
+		return{
+			fun:function(m){
+				return fun(m,n);
+			}
+		}
+	}
+	var a = fun(0); a.fun(1);a.fun(2);a.fun(3);
+	var b = fun(0).fun(1).fun(2).fun(3);
+	var c = fun(0).fun(1);	c.fun(2);  c.fun(3);
+	
+166:了解node吗？Node的使用场景有哪些？
+	高并发，聊天，实时消息推送
+	
+167:对node的优点和缺点提出自己的看法？
+	优点:因为Node是基于事件驱动的和无阻塞的，所以非常适合处理并发请求，
+		因此建立在node上的代理服务器相比其他技术实现的服务器性能好的多
+		此外，与node代理服务器交互的客户端代码是由JavaScript语言编写的
+		因此客户端和服务器端都用同一种语言编写，这是非常美妙的事情
+	缺点:支持不够完善
+	
+168:对普通网站优化的思路
+	对普通网站优化有一个统一的思路，就是尽量向前端优化，减少数据库操作
+	减少磁盘IO。向前端优化指的是，在不影响功能和体验的情况下，能在浏览
+	器执行的不要在服务器端执行，能在缓存中取的不要在磁盘中取，能在本地
+	服务器上取的不要到远程服务器上取，程序能取得的结果不要到外部取得，
+	缓存中有的不要到数据库中查询。  减少数据库操作，减少磁盘IO，减少文件读取
+	尽量使用内存而不使用外存。
+	
+169:HTTP请求过程
+	1:查找浏览器缓存
+	2:DNS解析，查找该域名对应的IP地址,重定向(301),发出第二个GET请求
+	3:发起TCP连接
+	4:HTTP连接
+	5:客户端发送报头(请求报头)
+	6:服务器响应客户端请求的资源
+	7:文档开始下载
+	8:客户端解析文档，构建DOM树，解析CSS，CSS和DOM树重合，重绘，重排
+	9:输出到屏幕显示设备
+	
+170:浏览器是怎样对HTML5的离线？
+	在线的情况下，浏览器发现HTML头部有manifest属性，它会请求manifest文件
+	如果是第一次访问APP，那么浏览器就会根据manifest文件的内容下载相应的资源
+	并且进行离线存储。如果已经访问过APP并且资源已经离线存储了，那么浏览器就会
+	使用离线的资源加载页面，然后浏览器会对比新的manifest文件与旧的manifst文件
+	如果文件没有发生改变，就不做任何操作，如果文件改变了，那么重新下载文件中的
+	资源，并进行离线存储。离线的情况下，浏览器就直接使用离线存储的资源
+	
+171:如何实现双向数据绑定？
+	vue:采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来
+	劫持各个属性的setter和getter，在数据变动时发布消息给订阅者，在收到消息后执行
+	相应的更新操作
+	AngularJS:采用"脏值检测"的方式，数据发生变更后，对于所有的数据和视图的绑定关系
+	进行一次检测，识别是否有数据发生了改变
+	
+172:http响应中content-type包含哪些内容
+	请求消息主体是用何种方式编码
+	application/x-www-form-urlencoded
+	这是最常见的POST提交数据的方式 按照key1=value1&key2=val2&key3=val3
+	application/json
+	告诉服务器消息主体是序列化后的JSON字符串
+	
+173:浏览器缓存有哪些，通常缓存有哪几种方式
+	强缓存 强缓存如果命中，浏览器直接从自己的缓存中读取资源，不会发请求到服务器
+	
+174:ajax中当前状态有哪些？
+	0:代表未初始化。还没有调用open方法
+	1:代表正在加载。open方法已被调用，但是send方法还没有被调用
+	2:代表已经加载完毕，send已被调用，请求已经开始
+	3:代表交互中。服务器正在发生响应
+	4:代表完成。响应发送完毕
+	
+175:将三个DIV等分排布在一行(考察border-box)
+	1:设置border-box width:33.3%
+	2:flexbox flex:1
+	
+176:函数防抖和函数节流
+	函数防抖:是指频繁触发的情况下，只有足够的空闲时间，才执行代码一次
+		实现方法:使用一个setTimeout来辅助实现。延迟执行需要跑的代码
+	函数节流:是指一定时间内js只跑一次
+		实现方法:声明一个变量当标志位，记录当前代码是否在执行，如果空闲，则可以正常触发方法执行
+		
+177:实现两栏布局有哪些方法
+	*{margin:0;padding:0;}
+	html,body{
+		height:100%;
+	}
+	#left{
+		width:300px;
+		height:100%;
+		float:left;
+	}
+	#right{
+		height:100%;
+		margin-left:300px;
+		background-color:#eee;
+	}
+	
+178:判断链表是否有环
+	使用追赶的方法,设定两个指针 slow,fast,从头指针开始，每次分别前进1步和2步.如存在环，则两者相遇，
+	如不存在环，则两者不相遇
+	
+179:输出二叉树的最小深度
+	判断左子树或右子树是否为空，若左子树为空，则返回右子树的深度，若右子树为空，则返回左子树的深度
+	若两个都不为空，则返回左子树和右子树的深度的最小值
+
+180:垂直居中
+	单行行内元素 1，可以设置padding-top,padding-bottom,将height和line-height设为相等
+	多行行内元素 2，可以将元素转为table样式，再设置vertical-align:middle; 2，使用flex布局
+	块级元素: 已知高度，绝对定位负边框
+			未知高度，transform:translateX(-50)
+	
+181:transition的属性值和应用
+	属性的名称 过渡时间 时间曲线 延迟
+	
+182:rem和em的区别
+	rem相对于根元素，em相对于父元素
+	
+183:JavaScript的三大组成部分
+	1:ECMAScript:JavaScript的核心，描述JavaScript的基本语法
+	2:文档对象模型:DOM
+	3:浏览器对象模型:BOM
+	
+184:express框架核心特性是什么？
+	可以设置中间件来响应 HTTP 请求。
+	定义了路由表用于执行不同的 HTTP 请求动作。
+	可以通过向模板传递参数来动态渲染 HTML 页面。
+
+185:判断字符串的类型
+	var s1 = "abc";
+	var s2 = new String('abc')
+	
+	((str instanceof String)||(typeof str).toLowerCase()=="string")
+	
+186:表格基数行为白,偶数为灰,悬浮为黄
+	<style type="text/css">
+		.table tr:nth-child(2n-1){
+			background-color:white;
+		}
+		.table tr:nth-child(2n){
+			background-color:grey;
+		}
+		.table tr:hover{
+			background-color:yellow;
+		}
+	</style>
+	
+187:解析url参数为json
+	<script type="text/javascript">
+		function parseQueryString(url){
+			var theRequest = new Object();
+			if(url.indexOf("?")!=-1){
+				var str = url.substr(url.indexOf("?")+1);
+				strs = str.split("&");
+				for(var i=0;i<strs.length;i++){
+					theRequest[strs[i].split("=")[0]]=strs[i].split("=")[1];
+				}
+			}
+			return theRequest;
+		}
+		var url = "http://cmccim.com/index.html?key0=0&key1=1&key2=2";
+		var paramObj = eval(parseQueryString(url));
+
+		for(var x in paramObj){
+			console.log(x+":"+paramObj[x]);
+		}
+	</script>
+	
+188:查找数组元素位置
+	function indexOf(arr,item){
+		return arr.indexOf(item);
+	}
+	
+189:数组求和
+	function sum(arr){
+		var su = 0;
+		arr.forEach(function(value,index,arr){
+			su += value;
+		})
+		return su;
+	}
+	
+190:移除数组中的元素
+	移除数组arr中的所有值与item相等的数组,不要在原数组上删
+		 输入例子:remove([1,2,3,4,2],2)
+	 	function remove(arr,item){
+	 		return arr.filter(function(d){
+	 			return d !== item;
+	 		})
+		 }
+	 
+191:移除数组中的元素(原数组上删)
+	移除数组arr中的所有值与item相等的元素,直接在给定的arr数组上进行操作
+		输入例子:removeWithoutCopy([1,2,2,3,4,2,2],2)
+		输出例子: [1,3,4]
+		function removeWithoutCopy(arr,item){
+			for(var i = 0;i<arr.length;i++){
+				if(arr[i] == item){
+					arr.splice(i,1);
+					i--;
+				}
+			}
+			return arr;
+		}
+		
+192:添加元素
+	在数组末尾添加元素item,不要直接修改数组,返回新数组
+		输入例子:append([1,2,3,4],10)
+		输出例子:[1,2,3,4,10]
+		function append(arr,item){
+			return [].concat(arr,item);
+		}
+		
+193:删除数组最后一个元素
+	删除数组arr最后一个元素,不要直接修改数组arr,结果返回一个新数组
+		输入例子:tiuncate([1,2,3,4])
+		输出例子:[1,2,3]
+		function truncate(arr){
+			return arr.slice(0,arr.length-1)
+		}
+		
+194:添加元素
+	在数组开头添加元素item,不要直接修改数组arr,结果返回新的元素
+	输入例子: prepend([1,2,3,4],10)
+	输出例子: [10,1,2,3,4]
+	function prepend(arr,item){
+		return [].concat(item,arr);
+	}
+	
+195:删除数组第一个元素
+	删除数组arr第一个元素,不要直接修改数组arr,结果返回新的数组
+		输入例子:curtail([1,2,3,4])
+		输出例子:[2,3,4]
+		function curtail(arr){
+			return arr.slice(1,arr.length);
+		}
+		
+196:数组合并
+	合并数组arr1和数组arr2,不要在原数组上修改,结果返回新数组
+	输入例子: concat([1,2,3,4],['a','b','c','d'])
+	输出例子: [1,2,3,4,'a','b','c','d']
+	function concat(arr,arr){
+		return [].concat(arr,arr)
+	}
+	
+197:添加元素
+	在数组arr的index处添加元素item,不要直接修改数组arr,结果返回新的数组
+	输入例子: insert([1,2,3,4],'z',2)
+	输出例子: [1,2,'z',3,4]
+	function insert(arr,item,index){
+		return [].concat(arr.slice(0,2),item,arr.slice(2,arr.length));
+	}
+	
+198:计数
+	统计数组arr中值等于item的元素出现的次数
+	输入例子:count([1,2,4,4,3,4,3],4)
+	输出例子:3
+	function count(arr,item){
+		var count = 0;
+		arr.foreach(function(value,index,arr){
+			if(value === item){
+				count++;
+			}
+		})
+		return count;
+	}
+	
+199:查找重复元素
+	找出数组arr中重复出现过的元素
+	输入例子:duplicates([1,2,4,4,3,3,1,5,3]).sort()
+	输出例子:[1,3,4]
+	function duplicates(arr){
+		var arr2 = [];
+		var obj = {};
+		for(var i =0,len=arr.length;i<len;i++){
+			if(!obj[arr[i]]){
+				obj[arr[i]] = 1;
+			}else{
+				obj[arr[i]]++;
+				if(obj[arr[i]] == 2){
+					arr2.push(arr[i]);
+				}
+			}
+		}
+		return arr2;
+	}
+	
+200:求二次方
+	为数组arr中的每个元素求二次方.不要直接修改数组arr,结果返回新的数组
+	输入例子:square([1,2,3,4])
+	输出例子:[1,4,6,16]
+	function square(arr){
+		return arr.map(function(data,index,arr){
+			return data*data;
+		})
+	}
+	
+201:查找元素位置
+	在数组arr中,查找值与item相等的元素出现的所有位置
+	输入例子:findAllOccurrences('abcdefabc'.split(''),'a').sort()
+	输出例子:[0,6]
+	function findAllOccurrences(arr,target){
+		var arr2=[];
+		arr.foreach(function(data,index,arr){
+			if(data === target){
+				arr2.push(index);
+			}
+		})
+		return arr2;
+	}
+	
+202:计时器
+	实现一个打点计时器,要求
+	1:从start到end(包含start和end),每隔100毫秒concole.log一个数字,每次数字增幅为1;
+	2:返回的对象中需要包含一个cancel方法,用于停止定时操作
+	3:第一个数需要立即输出
+	function count(start,end){
+		console.log(start);
+		var timer = setInterval(function(){
+			if(start<end){
+				console.log(++start);
+			}else{
+				//打印结束清除定时器，防止内存泄漏
+				clearInterval(timer);
+			}
+		},100);
+		funciton cancel(){
+			clearInterval(timer);
+		}
+		return{
+			cancel:cancel
+		}
+	}
+	
+203:函数传参
+	将数组arr中的元素作为调用函数fn的参数
+	输入例子:
+	argsAsArray(function(greeting,name,punctuation){
+		return greeting+','+name+(punctuation||'!');
+	},['hello','Ellie','!'])
+	输出例子:hello,Ellie!
+	function argsAsArray(fn,arr){
+		return fn.apply(this,arr);
+	}
+	
+204:闭包
+	实现函数makeClosures,调用之后满足如下条件
+	1:返回一个函数数组result,长度与arr相同
+	2:运行result中第i个函数,即resulti,结果与fn(arr[i])相同
+	输入例子:
+		var arr = [1,2,3];
+		var square = function(x){return x*x };
+		var funcs = makeClosures(arr,square);
+		funcs[1]();
+	输出例子: 4
+	function makeClosures(arr,fn){
+		var result = [];
+		for(var i =0;i<arr.length;i++){
+			result.push(function(i){
+				return function(){
+					return fn(arr[i]);
+				}
+			}(i));
+		}
+		return result;
+	}
+	
+205:请修复给定的js代码中,函数定义存在的问题
+	//看返回值getValue(),原本的函数定义便不符合需求，以变量的形式存储，方便调用
+	function functions(flag){
+		if(flag){
+			var getValue=function(){
+				return 'a';
+			}
+		}else{
+			var getValue=function(){
+				return 'b';
+			}
+		}
+		return getValue();
+	}
+	
+	修改后:
+		function functions(flag){
+			if(flag){
+				function getValue(){
+					return 'a';
+				}
+			}else{
+				function getValue(){
+					return 'b';
+				}
+			}
+			return getValue();
+		}
+		
+206:修改js代码中parseInt的调用方式,使之通过全部测试用例
+	如输入:'12px',输出:12
+	function parse2Int(num){
+		var i=0;
+		while(num[i]>='0' && num[i]<='9'){
+			i++;
+		}
+		return parseInt(num.slice(0,i));
+	}
+	
+207:实现fizzBuzz函数,参与num与返回值的关系如下:
+	1:如果num能同时被3和5整除,返回字符串fizzbuzz
+	2:如果num能被3整除,返回字符串fizz
+	3:如果num能被5整除,返回字符串buzz
+	4:如果参数为空或者不是Number类型,返回false
+	5:其余情况,返回参数num
+	function fizzBuzz(num){
+		if(num == null || typeof(num) != 'number'){
+			return false;
+		}
+		if(num%15 == 0){
+			return 'fizzbuzz'
+		}
+		if(num%5 == 0){
+			return 'buzz'
+		}
+		if(num%3 == 0){
+			return 'fizz'
+		}
+		return num;
+	}
+	
+208:将数组arr中的元素作为调用函数fn的参数
+	输入:function(greeting,name,punctuation){
+		return greeting + ',' + name + punctuation;
+	}  ['Hello','Ellie','!']
+	输出:Hello,Ellie!
+	function argsAsArray(fn,arr){
+		return fn.apply(this,arr)
+	}
+
+209:将函数fn的执行上下文改为obj对象
+	输入:function(){
+		return this.greeting + ',' +this.name + '!!!';
+	},{greeting:'Hello',name:'Rebecca'}
+	输出:Hello,Rebecca!!!
+	
+	//方法一:利用bind绑定函数的上下文，再调用函数
+	function speak(fn,obj){
+		return fn.bind(obj)();
+	}
+	//方法二:call第一个参数为函数的上下文，对第一个参数进行赋值即可
+	function speak(fn,obj){
+		return fn.call(obj);
+	}
+	//方法三
+	function speak(fn,obj){
+		return fn.apply(obj)
+	}
+	
+210:实现函数functionFunction,调用之后满足如下条件:
+	1:返回值为一个函数f
+	2:调用返回的函数f,返回值为按照调用顺序的参数凭借,拼接字符为英文逗号加以个空格,即','
+	3:所有函数的参数数量为1,且均为String类型
+	输入:functionFunction('Hello')('world')
+	输出:Hello,World
+	function functinFunction(str){
+		return function(s){
+			return str+','+s;
+		}
+	}
+	
+211:实现函数makeClosures,调用之后满足如下条件
+	1:返回一个数组result,长度与arr相同
+	2:运行result中第i个函数,即result[i](),结果与fn(arr[i])相同
+	输入: [1,2,3],function(x){return x*x;}
+	输出: 4
+	function makeClosures(arr,fn){
+		var newArray = [];
+		arr.foreach(function(e){
+			newArray.push(function(){
+				return fn(e);
+			})
+		})
+		return newArray;
+	}
+	
+212:已知函数fn执行需要3个函数.请实现函数partial,调用之后满足如下条件:
+	1:返回一个函数result,该函数接受一个参数
+	2:执行result(str3),返回的结果与fn(str1,str2,str3)一致
+	输入:var saylt = function(greeting,name,punctuation){
+			return greeting+','+name+(punctuation||'!');
+		};
+		partial(saylt,'Hello','Ellie')('!!!');
+	输出:Hello,Ellie!!!
+	function partial(fn,str1,str2){
+		var result=function(str3){
+			return fn(str1,str2,str3);
+		}
+		return result;
+	}
+	
+213:函数useArguments可以接收1个及以上的参数.请实现函数useArguments,
+   返回所有调用参数相加后的结果,本体的测试参数全部为Number类型,不需要考虑参数转换
+   	输入:1,2,3,4
+   	输出:10
+   	function useArguments(){
+   		var sum = 0;
+   		for(var i =0;i<arguments.length;i++){
+   			sum+=arguments[i];
+   		}
+   		return sum;
+   	}
+   	
+214:实现函数callIt,调用之后满足如下条件
+	1:返回的结果为调用fn之后的结果
+	2:fn的调用参数为callIt的第一个参数之后的全部参数
+	function callIt(fn){
+		return fn.apply(this,[].slice.call(arguments,1));
+	}
+	
+215:实现函数partialUsingArguments,调用之后满足如下条件
+	1:返回一个函数result
+	2:调用result之后,返回的结果与调用函数fn的结果一致
+	3:fn的调用参数为partialUsingArguments的第一个参数之后的全部参数以及result的调用参数
+	function partialUsingArguments(fn){
+		var arg = [].slice.call(arguments,1);
+		functionresult(){
+			return fn.apply(this,arg.concat([].slice.call(argument)));
+		}
+		return result;
+	}
+	
+216:已知fn为一个预定义函数,实现函数curryIt,调用之后满足如下条件:
+	1:返回一个函数a,a的length属性值为1(即显示声明a接收一个参数)
+	2:调用a之后,返回一个函数b,b的length属性值为1
+	3:调用b之后,返回一个函数c,c的length属性值为1
+	4:调用c之后,返回的结果与调用fn的返回值一致
+	5:fn的参数依次为函数a,b,c的调用参数
+	输入: var fn = function(a,b,c){return a+b+c};
+		curryIt(fn)(1)(2)(3)
+	输入:6
+	
+	//方法一 利用局部递归的方式执行内部函数，直至函数内部return
+	funciton curryIt(fn){
+		var n =fn.length;
+		var arr = [];
+		var result = function(x){
+			arr.push(x);
+			if(arr.length==n)
+				return fn.apply(this,arr);
+			return result;
+		}
+		return result;
+	}
+	
+	//方法二:利用函数签到函数的方式进行
+	function curryIt(fn){
+		return function(x){
+			return function(y){
+				return function(z){
+					return fn.call(this,x,y,z);
+				}
+			}
+		}
+	}
+
+217:如何判断某变量是否为数组数据类型?
+	if(typeof Array.isArray === "undefined"){
+		Array.isArray = function(arg){
+			return Object.prototye.toString.call(arg)==="[object Array]"
+		}
+	}
+
+218:希望获取页面中所有的checkbox怎么做?
+	var domList = document.getElememntsByTagName('input')
+	var checkBoxList = [];
+	var len = domList.length;
+	while(len--){
+		if(domList[len].type=='checkbox'){
+			checkBoxList.push(domList[len]);
+		}
+	}
+	
+219:设置一个已知ID的DIV的html内容为hello,字体颜色设置为红色
+	var dom = document.getElementById('ID')
+	dom.innerHTML = "hello"
+	dom.style.color = "red"
+
+220:当一个dom节点被点击时候,我们希望能够执行一个函数,应该怎么做?
+	1:直接在dom里绑定事件, <E onclick = "test()"></E>
+	2:xxx.onclick = test;
+	3:xxx.addEventListener('click',function(){})
+	
+221:属性复制
+	function extend(target,source){
+		for(var property in source){
+			target[property] = source[property]
+		}
+		return target
+	}
+	
+222:编写一个数组去重的方法,
+	Array.prototype.unique = function(){
+		var n =[];
+		for(var i = 0;i<this.length;i++){
+			if(n.indexOf(this[i]==-1)){
+				n.push(this[i]);
+			}
+		}
+		return n;
+	}
+	
+223:输出今天的日期,以YYYY-MM-DD的方式,比如今天2018-8-21
+	var d = new Date();
+	var year = d.getFullYear();
+	var month = d.getMonth()+1;
+	month = month<10?'0'+month:month;
+	var day = d.getDate();
+	day = day<10?'0'+day:day;
+	alert(year+'-'+month+'-'+day);
+	
+224:将字符串中"<tr><td>{$id}</td><td>{$name}</td</tr>"中的{$id}替换成0,{$name}替换成tony
+	var str =  "<tr><td>{$id}</td><td>{$name}</td</tr>"
+	str.replace(/{\$id}/g,'0').replace(/{\$name}/g,'tony')
+	
+225:为了保证页面输出安全,我们经常需要对一些特殊的字符进行转义,请写出一个函数excapeHtml,将<,>,&,"进行转义
+	function escapeHtml(str){
+		return str.replace(/[<>"&]/g,function(match){
+			switch(match){
+				case "<":
+					return "&lt;";
+				case ">":
+					return "&gt;";
+				case "&":
+					return "&amp;";
+				case "\"":
+					return "&quot;";
+			}
+		})
+	}
+
+226:设计一个TODO List,页面结构如下图所示，要求:
+	使用HTML与CSS完成界面开发
+	实现添加功能:输入框中可输入任意字符，按回车后输入字符串添加到下方列表的最后，并清空输入框
+	实现删除功能:点击列表项后面的"cha"号，可以删除该项
+	实现模糊匹配:在输入框中输入字符后，将当前输入字符串与已添加的列表项进行模糊匹配，将匹配到的结果
+			 显示在输入框下方，如匹配不到任何列表项，列表显示空
+		<!DOCTYPE html>
+			<html lang="en">
+ 
+			<head>
+    			<meta charset="UTF-8">
+    			<title>头条前端最后一道题</title>
+    			<style>
+   			     .main-header {
+      			      text-align: center;
+      			  }
+ 
+     			   h1 {
+            			font-size: 100px;
+            			color: rgba(175, 47, 47, 0.4);
+            			font-weight: 100;
+            			margin: 20px;
+        			}
+        			.real-app {
+            			width:600px;
+            			margin: 0 auto;
+            			box-shadow: 0 0 5px #666;
+        			}
+        			.add-input {
+            			position: relative;
+            			margin: 0;
+            			width: 100%;
+            			font-size: 24px;
+            			font-family: inherit;
+            			font-weight: inherit;
+            			line-height: 1.4em;
+            			border: 0;
+            			outline: none;
+            			color: inherit;
+            			padding: 6px;
+            			border: 1px solid #999;
+            			box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+            			box-sizing: border-box;
+            			font-smoothing: antialiased;
+            			padding: 16px 16px 16px 60px;
+            			border: none;
+            			box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+        			}
+ 
+     				li {
+            			margin: 4px 0;
+            			color: rgba(175, 47, 47, 0.8);
+            			list-style: none;
+           	 			padding-left: 18px;
+        			}
+        			.close{
+            			width: 20px;
+            			height: 20px;
+            			float:right;
+            			background: rgba(0,0,0,0.2);
+            			text-align: center;
+            			line-height: 20px;
+            			position: relative;
+            			bottom: 3px;
+            			right:4px;
+        			}
+    			</style>
+			</head>
+ 
+			<body>
+    			<p class="main-header">
+        			<h1>todos</h1>
+    			</p>
+    			<p class="real-app">
+        			<input type="text" class="add-input" placeholder="请在这里输入">
+        			<ul id="parent">
+ 
+        			</ul>
+    			</p>
+ 
+ 
+			</body>
+			<script>
+       	 			var arr = [];
+        			var button = "<p class='close'>X</p>";
+        			// var button = " X";
+ 
+        			var input = document.getElementsByClassName("add-input")[0];
+        			var left = input.offsetLeft;
+        			document.getElementById("parent").addEventListener("click",function(e) {
+           	 			// e.target是被点击的元素!,this是在父元素捕获的ul
+            			// 如果被点击的是li元素
+            			// console.log("success");
+            			if(e.target && e.target.nodeName == "DIV") {
+                			// console.log(this);
+                			// console.log(e.target);
+                			// console.log(e.target.parentNode)
+                			var str = e.target.parentNode.innerHTML.toString();
+                			var k = str.indexOf("<");
+               			 str = str.substr(0,k);
+                			// console.log(str);
+                			e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+                			arr.pop(str);
+ 
+                			// arr.pop(e.target.parentNode.text)
+            			}
+        			});
+        			//onkeyup 属性在用户（在键盘上）释放按键时触发。
+   			/*      提示：相对于 onkeyup 事件的事件次序：
+            			onkeydown onkeypress onkeyup  
+            			onkey是键盘接受字符后的事件，这点和onkeypress不同
+   			*/      
+        			input.onkeyup = function(e) {
+           			var value = this.value;
+           			console.log(value);
+           			var ul = document.getElementsByTagName('ul')[0];
+           			ul.style.left = left + "px";
+           			ul.style.border = "none";
+           			ul.innerHTML = "";
+           			if(value) {
+          	     			var reg = new RegExp(value);
+               			for(var i = 0; i <arr.length; i++ ) {
+                   			//string类型的match方法
+                   			if(arr[i].match(reg)) {
+                       			var li = document.createElement('li');
+                       			li.innerHTML = arr[i] + button;
+                       			ul.style.border = "1px solid black";
+                       			ul.appendChild(li);
+                   			}
+               			}
+ 
+               			e = e || window.event;
+               			if(e.keyCode == 13) {
+                   			var newLi = document.createElement('li');
+                   				var newValue = value;
+                   			newLi.innerHTML = newValue + button;
+                   			ul.appendChild(newLi);
+                   			arr.push(newValue);
+                   			input.value = "";
+               				}
+           			}
+        			//    按照这个方法给每个li添加事件太浪费了，每次新增加回车就要操作一遍，可以利用时间委托机制，即上面的
+       			 	//    var close = document.getElementsByClassName("close");
+        			//    for(var i = 0; i < close.length; i++) {
+        			//        (function(i){    
+        			//            close[i].onlick = function(){
+        			//                this.parentNode.parentNode.removeChild(this.parentNode);
+        			//            }
+        			//        })(i);
+        			//    }
+        			}
+			</script>
+			</html>
+			
+227:下面的输出:
+	123 instanceof Number,Number(123)instanceof Number,new Number(123) instanceof Number
+	答案:false false true
+	数值类型的字面量并不是构造函数生成的，另外instanceof的左边值一定是对象，不是数值
+	
+228:实现bind函数
+	if(!Function.prototype.bind){
+		Function.prototype.bind = function(context){
+			//首先判断是不是function
+			if(typeof this !== 'function'){
+				//抛出错误
+			}
+			var _this = this,
+				fNOP = function(){},
+				args = Array.prototype.slice.call(arguments,1),
+				fBound = function(){
+					_this.call(context,args.concat(Array.prototype.slice.call(arguments)))
+				};
+			//维护原型关系
+			if(this.prototype){
+				fNOP.prototype = this.prototype;
+				fBound.prototype = new fNOP;
+			}
+			return fBound;
+		}
+	}
+	
+229:节流函数
+	var throttle = function(fn){
+  		var timer = null;
+  		return function(){
+    		var args = arguments, context = this;
+    		clearTimeout(timer);
+    		timer = setTimeout(function(){
+      		fn.call(context, args)
+    		}, 100)
+  		}
+	}
+	这跟javascript高级程序设计中的实现方式差不多，其实严格来说这种实现方式并不叫节流函数，而是防抖函数：短时间内多次调用同一函数，只执行最后一次调用。
+	下面是改进：
+		var throttle = function(fn){
+  			var timer = null;
+  			return function(){
+    			var args = arguments, context = this;
+    			if(!timer){
+      				timer = setTimeout(function(){
+        			timer = null;
+        			fn.call(context, args)
+      				}, 100);
+    			}
+  			}
+		}
+		如此一来这个功能基本上就可以实现了，但是仍有一个问题，第一次调用的时候函数并没有执行，而是直接从第三次调用开始执行的，那么我们再改进一下，加一个第一次调用时的哨兵即可：
+		var throttle = function(fn){
+  			var timer = null, first = true;
+  			return function(){
+    			var args = arguments, context = this;
+    			if(first){
+      				first = false;
+      				fn.call(context, args)
+    			}
+    			if(!timer){
+      				timer = setTimeout(function(){
+        			timer = null;
+        			fn.call(context, args)
+      				}, 100);
+    			}
+  			}
+		}
+		
+230:穷举组合
+	实现一个函数，给三个参数，data是整形数组，m和sum都是一个整数，从data中取出n个整数，
+	使它们的和为sum，求出一种组合即可
+	
+231:H5新增元素
+	新增元素：article，aside,nav,section,footer,header,figure,figcaption
+	新增表单元素:email（自动验证email格式）
+			url（自动验证url格式）
+			number（只能输入数字）
+			range（类似音量滑动条）
+			Date pickers (date, month, week, time, datetime, datetime-local)（自带日期选择）
+			search（搜索域）
+			color（颜色选择）
+			datalist（自动验证内容是否在可选择选项中）
+
+232:置换元素和替换元素
+	替换元素:img,input,textarea,select,object
+	
